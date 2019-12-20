@@ -5,7 +5,7 @@ const app = express();
 const path = require("path");
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/form", (req, res) => {
   nodemailer.createTestAccount((err, account) => {
@@ -50,7 +50,6 @@ app.post("/api/form", (req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  app.use("*", express.static("client/build"));
 
   app.get("*", (req, res) => {
     path.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
