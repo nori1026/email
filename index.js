@@ -52,8 +52,11 @@ app.post("/api/form", (req, res) => {
 app.use(express.static("client/build"));
 
 app.get("*", (req, res) => {
-  path.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
+  let url = path.join(__dirname, '../client/build', 'index.html');
+  if (!url.startsWith('/index/')) // since we're on local windows
+    url = url.substring(1);
+  res.sendFile(url);
+}););
 // }
 
 const PORT = process.env.PORT || 3001;
